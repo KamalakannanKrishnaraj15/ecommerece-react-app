@@ -8,6 +8,7 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import LocalStorageUtils from './firebase/localStorage.util';
 
 class App extends Component {
   constructor() {
@@ -21,6 +22,7 @@ class App extends Component {
   unsubscribeAuth = null;
 
   componentDidMount() {
+    const { setItem, getItem } = LocalStorageUtils;
     this.unsubscribeAuth = auth?.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -37,6 +39,7 @@ class App extends Component {
       }
 
       this.setState({ currentUser: userAuth });
+      setItem('currentUser', userAuth);
     });
   }
 

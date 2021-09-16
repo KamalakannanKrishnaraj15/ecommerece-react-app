@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/crown.svg';
+import { ReactComponent as Logo } from '../../assets/ecomm-logo.svg';
 import { auth } from '../../firebase/firebase.utils';
 
 import './header.styles.scss';

@@ -6,6 +6,19 @@
   margin: 30px auto;
 }
 
+.welcome-msg-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 180px);
+}
+
+.welcome-lottie-anmiation {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
 @media screen and (min-width: 768px) {
   .sign-in-and-sign-up {
     flex-direction: row;
