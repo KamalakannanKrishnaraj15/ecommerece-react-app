@@ -6,6 +6,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import { signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './sign-in.styles.scss';
+import { ReactComponent as GoogleLogo } from '../../assets/google-icon.svg';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -32,8 +33,8 @@ class SignIn extends React.Component {
   render() {
     return (
       <div className='sign-in'>
-        <h2>I already have an account</h2>
-        <span>Sign in with your email and password</span>
+        <h2 className='title'>Sign in</h2>
+        {/* <span>Sign in with your email and password</span> */}
 
         <form onSubmit={this.handleSubmit}>
           <FormInput
@@ -58,7 +59,7 @@ class SignIn extends React.Component {
               onClick={signInWithGoogle}
               isGoogleSingIn
             >
-              Sign in with Google
+              <GoogleLogo className="google-sign-in-icon" />
             </CustomButton>
           </div>
         </form>
