@@ -3,13 +3,20 @@ import lottie from 'lottie-web';
 
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
+import ShoppingLoader from '../../components/shopping-loader/shopping-loader.component';
 import { auth } from '../../firebase/firebase.utils';
 
 import './sign-in-and-sign-up.styles.scss';
 
 const SignInAndSignUpPage = () => {
   const [isWelcomeVisible, setWelcomeVisible] = useState(false);
+  const [isShoppingLoaderVisible, setShoppingLoaderVisible] = useState(false);
+
   const { currentUser = null } = auth || {};
+
+  const handleSignUp = (value) => {
+    setShoppingLoaderVisible(value);
+  };
 
   useEffect(() => {
     if (currentUser === null) {
@@ -31,27 +38,36 @@ const SignInAndSignUpPage = () => {
     });
   }, [isWelcomeVisible]);
 
+
+  const getComponent = () => {
+    if (isWelcomeVisible) {
+      return (
+        <div className='welcome-msg-container'>
+          <div>
+            <div>
+              <div id='welcome-lottie' className='welcome-lottie-anmiation' />
+            </div>
+            <h2 className='welcome-msg'>Welcome to crown shopping!</h2>
+          </div>
+        </div>
+      );
+    } else if (isShoppingLoaderVisible) {
+      return (
+        <ShoppingLoader state={isShoppingLoaderVisible} />
+      );
+    } else {
+      return (
+        <Fragment>
+          <SignIn />
+          <SignUp onSingUpSubmit={handleSignUp} />
+        </Fragment>
+      );
+    }  
+  };
+
   return (
     <div className='sign-in-and-sign-up'>
-      {
-        isWelcomeVisible
-          ? (
-            <div className='welcome-msg-container'>
-              <div>
-                <div>
-                  <div id='welcome-lottie' className='welcome-lottie-anmiation' />
-                </div>
-                <h2 className='welcome-msg'>Welcome to crown shopping!</h2>
-              </div>
-            </div>
-          )
-          : (
-            <Fragment>
-              <SignIn />
-              <SignUp />
-            </Fragment>
-          )
-      }
+      {getComponent()}
     </div>
   );
 };

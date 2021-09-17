@@ -1,0 +1,13 @@
+.shopping-loader-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 180px);
+  width: 100%;
+}
+
+.shopping-loader-anmiation {
+  width: 300px;
+  height: 300px;
+  margin-bottom: 30px;
+}
