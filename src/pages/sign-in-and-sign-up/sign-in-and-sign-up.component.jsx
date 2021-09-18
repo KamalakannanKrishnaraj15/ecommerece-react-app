@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import lottie from 'lottie-web';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router-dom';
 
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
@@ -25,6 +25,7 @@ const SignInAndSignUpPage = ({ currentUser }) => {
   useEffect(() => {
     if (currentUser === null) {
       setRedirect(false);
+      setShoppingLoaderVisible(false);
       setWelcomeVisible(false);
     } else {
       setShoppingLoaderVisible(false);
