@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
 import ShoppingLoader from '../../components/shopping-loader/shopping-loader.component';
-import { auth } from '../../firebase/firebase.utils';
-import LocalStorageUtils from '../../firebase/localStorage.util';
 
 import './sign-in-and-sign-up.styles.scss';
 
@@ -14,25 +12,18 @@ const SignInAndSignUpPage = ({ currentUser }) => {
   const [isWelcomeVisible, setWelcomeVisible] = useState(null);
   const [isShoppingLoaderVisible, setShoppingLoaderVisible] = useState(false);
 
-  const { getItem } = LocalStorageUtils;
-  const currentUserData = getItem('currentUser');
-
-
   const handleSubmit = (value) => {
     setShoppingLoaderVisible(value);
   };
 
   useEffect(() => {
-    if (currentUser === null && currentUserData !== null) {
-      setShoppingLoaderVisible(true);
+    if (currentUser === null) {
       setWelcomeVisible(false);
-    } else if (currentUserData === null) {
-      setShoppingLoaderVisible(false);
     } else {
       setShoppingLoaderVisible(false);
       setWelcomeVisible(true);
     }
-  }, [currentUser, currentUserData]);
+  }, [currentUser]);
 
   useEffect(() => {
     const lottieRef = document.getElementById('welcome-lottie');

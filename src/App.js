@@ -9,14 +9,12 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import LocalStorageUtils from './firebase/localStorage.util';
 import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends Component {
   unsubscribeAuth = null;
 
   componentDidMount() {
-    const { setItem } = LocalStorageUtils;
     const { setCurrentUser } = this.props;
     this.unsubscribeAuth = auth?.onAuthStateChanged(async userAuth => {
       if (userAuth) {
@@ -31,7 +29,6 @@ class App extends Component {
       }
 
       setCurrentUser(userAuth);
-      setItem('currentUser', userAuth);
     });
   }
 

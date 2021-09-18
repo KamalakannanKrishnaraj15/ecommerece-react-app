@@ -40,6 +40,11 @@ class SignIn extends React.Component {
     }
   };
 
+  handleSocialHandle = () => {
+    this.props.onSingInSubmit(true);
+    signInWithGoogle(this.props.onSingInSubmit(false));
+  }
+
   handleChange = event => {
     const { value, name } = event.target;
 
@@ -72,8 +77,8 @@ class SignIn extends React.Component {
             <CustomButton type='submit'> Sign in </CustomButton>
             <CustomButton
               type="button"
-              onClick={signInWithGoogle}
-              isGoogleSingIn
+              onClick={this.handleSocialHandle}
+              customClassName='google-sign-in'
             >
               <GoogleLogo className="google-sign-in-icon" />
             </CustomButton>
