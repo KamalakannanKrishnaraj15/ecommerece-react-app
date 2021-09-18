@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import lottie from 'lottie-web';
+import { connect } from 'react-redux';
 
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
@@ -9,11 +10,10 @@ import LocalStorageUtils from '../../firebase/localStorage.util';
 
 import './sign-in-and-sign-up.styles.scss';
 
-const SignInAndSignUpPage = () => {
+const SignInAndSignUpPage = ({ currentUser }) => {
   const [isWelcomeVisible, setWelcomeVisible] = useState(null);
   const [isShoppingLoaderVisible, setShoppingLoaderVisible] = useState(false);
 
-  const { currentUser = null } = auth || {};
   const { getItem } = LocalStorageUtils;
   const currentUserData = getItem('currentUser');
 
@@ -80,4 +80,8 @@ const SignInAndSignUpPage = () => {
   );
 };
 
-export default SignInAndSignUpPage;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(SignInAndSignUpPage);
