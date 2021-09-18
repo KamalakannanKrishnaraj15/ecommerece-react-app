@@ -55,6 +55,7 @@ class SingUp extends Component {
         this.props.onSingUpSubmit(false);
       });
     } catch(error) {
+      this.props.onSingUpSubmit(false);
       console.log(error);
     }
   }

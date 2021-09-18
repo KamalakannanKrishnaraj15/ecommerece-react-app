@@ -5,26 +5,34 @@ import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
 import ShoppingLoader from '../../components/shopping-loader/shopping-loader.component';
 import { auth } from '../../firebase/firebase.utils';
+import LocalStorageUtils from '../../firebase/localStorage.util';
 
 import './sign-in-and-sign-up.styles.scss';
 
 const SignInAndSignUpPage = () => {
-  const [isWelcomeVisible, setWelcomeVisible] = useState(false);
+  const [isWelcomeVisible, setWelcomeVisible] = useState(null);
   const [isShoppingLoaderVisible, setShoppingLoaderVisible] = useState(false);
 
   const { currentUser = null } = auth || {};
+  const { getItem } = LocalStorageUtils;
+  const currentUserData = getItem('currentUser');
 
-  const handleSignUp = (value) => {
+
+  const handleSubmit = (value) => {
     setShoppingLoaderVisible(value);
   };
 
   useEffect(() => {
-    if (currentUser === null) {
+    if (currentUser === null && currentUserData !== null) {
+      setShoppingLoaderVisible(true);
       setWelcomeVisible(false);
+    } else if (currentUserData === null) {
+      setShoppingLoaderVisible(false);
     } else {
+      setShoppingLoaderVisible(false);
       setWelcomeVisible(true);
     }
-  }, [currentUser]);
+  }, [currentUser, currentUserData]);
 
   useEffect(() => {
     const lottieRef = document.getElementById('welcome-lottie');
@@ -58,8 +66,8 @@ const SignInAndSignUpPage = () => {
     } else {
       return (
         <Fragment>
-          <SignIn />
-          <SignUp onSingUpSubmit={handleSignUp} />
+          <SignIn onSingInSubmit={handleSubmit} />
+          <SignUp onSingUpSubmit={handleSubmit} />
         </Fragment>
       );
     }  

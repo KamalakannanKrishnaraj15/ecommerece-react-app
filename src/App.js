@@ -22,7 +22,7 @@ class App extends Component {
   unsubscribeAuth = null;
 
   componentDidMount() {
-    const { setItem, getItem } = LocalStorageUtils;
+    const { setItem } = LocalStorageUtils;
     this.unsubscribeAuth = auth?.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);

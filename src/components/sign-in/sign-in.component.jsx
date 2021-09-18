@@ -3,7 +3,7 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './sign-in.styles.scss';
 import { ReactComponent as GoogleLogo } from '../../assets/google-icon.svg';
@@ -18,10 +18,26 @@ class SignIn extends React.Component {
     };
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
 
-    this.setState({ email: '', password: '' });
+    const { email, password } = this.state;
+
+    this.props.onSingInSubmit(true);
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+
+      this.setState({
+        email: '',
+        password: ''
+      }, () => {
+        this.props.onSingInSubmit(false);
+      });
+    } catch (error) {
+      this.props.onSingInSubmit(false);
+      console.log(error);
+    }
   };
 
   handleChange = event => {
@@ -31,24 +47,23 @@ class SignIn extends React.Component {
   };
 
   render() {
+    const { email, password } = this.state;
     return (
       <div className='sign-in'>
         <h2 className='title'>Sign in</h2>
-        {/* <span>Sign in with your email and password</span> */}
-
         <form onSubmit={this.handleSubmit}>
           <FormInput
             name='email'
             type='email'
             handleChange={this.handleChange}
-            value={this.state.email}
+            value={email}
             label='Email'
             required
           />
           <FormInput
             name='password'
             type='password'
-            value={this.state.password}
+            value={password}
             handleChange={this.handleChange}
             label='Password'
             required
@@ -56,6 +71,7 @@ class SignIn extends React.Component {
           <div className="buttons">
             <CustomButton type='submit'> Sign in </CustomButton>
             <CustomButton
+              type="button"
               onClick={signInWithGoogle}
               isGoogleSingIn
             >
