@@ -62,7 +62,7 @@ const SignInAndSignUpPage = ({ currentUser }) => {
     switch(true) {
       case redirect: {
         return (
-          <Redirect to="/" />
+          <Redirect to="/shop" />
         );
       }
       case isWelcomeVisible: {
