@@ -20,8 +20,8 @@ class ShopPage extends React.Component {
     this.state = {
       showLoader: false,
     };
-
-    this.unsubscribeFromSnapshot = null;
+    /* To follow the observable pattern use the below code to store the ref for onSnapShot() from firestore */
+    // this.unsubscribeFromSnapshot = null;
   }
 
   updateLoaderState = () => {
@@ -34,16 +34,29 @@ class ShopPage extends React.Component {
     const { updateCollections } = this.props;
     this.updateLoaderState();
     const collectionRef = firestore.collection('collections');
-    this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-      updateCollections(collectionsMap);
-      this.updateLoaderState();
-    });
+
+    /* To follow the observable pattern use the below code when the firestore data is updated our UI will also be updated here */
+    // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
+    //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //   updateCollections(collectionsMap);
+    //   this.updateLoaderState();
+    // });
+
+    /* To follow the promise pattern use the below code,
+      but when the firestore data is updated our UI will also be updated here only when component is re-rendered */
+    collectionRef.get().then(
+      snapshot => {
+        const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+        updateCollections(collectionsMap);
+        this.updateLoaderState();
+      }
+    );
   }
 
-  componentWillUnmount() {
-    this.unsubscribeFromSnapshot();
-  }
+  /* To follow the observable pattern use the below code to unsubscribe from onSnapShot from firestore */
+  // componentWillUnmount() {
+  //   this.unsubscribeFromSnapshot();
+  // }
 
   render() {
     const { match } = this.props;
