@@ -2,33 +2,26 @@ import React, { useState, useEffect, Fragment } from 'react';
 import lottie from 'lottie-web';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
 import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
 import ShoppingLoader from '../../components/shopping-loader/shopping-loader.component';
 
 import './sign-in-and-sign-up.styles.scss';
+import { selectCurrentUser, selectIsFetching } from '../../redux/user/user.selector';
 
-const SignInAndSignUpPage = ({ currentUser }) => {
+const SignInAndSignUpPage = ({ currentUser, isFetching }) => {
   const [isWelcomeVisible, setWelcomeVisible] = useState(null);
   const [redirect, setRedirect] = useState(null);
-  const [isShoppingLoaderVisible, setShoppingLoaderVisible] = useState(false);
 
-  const handleSubmit = (value) => {
-    setShoppingLoaderVisible(value);
-  };
-
-  useEffect(() => {
-    setShoppingLoaderVisible(true);
-  }, []);
+  console.log('isFetching flag', isFetching);
 
   useEffect(() => {
     if (currentUser === null) {
       setRedirect(false);
-      setShoppingLoaderVisible(false);
       setWelcomeVisible(false);
     } else {
-      setShoppingLoaderVisible(false);
       setWelcomeVisible(true);
       setTimeout(() => {
         setRedirect(true);
@@ -81,16 +74,16 @@ const SignInAndSignUpPage = ({ currentUser }) => {
           </div>
         );
       }
-      case isShoppingLoaderVisible: {
+      case isFetching: {
         return (
-          <ShoppingLoader state={isShoppingLoaderVisible} />
+          <ShoppingLoader state={isFetching} />
         );
       }
       default: {
         return (
           <Fragment>
-            <SignIn onSingInSubmit={handleSubmit} />
-            <SignUp onSingUpSubmit={handleSubmit} />
+            <SignIn />
+            <SignUp />
           </Fragment>
         );
       }
@@ -104,8 +97,9 @@ const SignInAndSignUpPage = ({ currentUser }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  isFetching: selectIsFetching,
 });
 
 export default connect(mapStateToProps)(SignInAndSignUpPage);

@@ -7,3 +7,7 @@ export const selectCurrentUser = createSelector(
   user => user.currentUser,
 );
 
+export const selectIsFetching = createSelector(
+  [selectUser],
+  shop => shop.isFetching,
+);

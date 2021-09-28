@@ -3,7 +3,9 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
+/* For redux-thunk approach */
+// import { fetchCollectionsAsync } from '../../redux/shop/shop.actions';
+import { fetchCollectionStart } from '../../redux/shop/shop.actions';
 import { selectIsFetching } from '../../redux/shop/shop.selectors';
 
 import CollectionsOverview from '../../components/collections-overview/collections-overview.component';
@@ -15,8 +17,14 @@ class ShopPage extends React.Component {
   // unsubscribeFromSnapshot = null;
 
   componentDidMount() {
-    const { fetchCollectionsAsync } = this.props;
-    fetchCollectionsAsync();
+    /* For redux-thunk approach */
+    // const { fetchCollectionsAsync } = this.props;
+    // fetchCollectionsAsync();
+
+    /* For redux-sagas approach */
+    const { fetchCollectionStart } = this.props;
+    fetchCollectionStart();
+
     /* To follow the observable pattern use the below code when the firestore data is updated our UI will also be updated here */
     // this.unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
     //   const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
@@ -51,8 +59,13 @@ const mapStateToProps = createStructuredSelector({
   showLoader: selectIsFetching,
 });
 
+/* For redux-thunk approach */
+// const mapDispatchToProps = (dispatch) => ({
+//   fetchCollectionsAsync: () => dispatch(fetchCollectionsAsync()),
+// });
+
 const mapDispatchToProps = (dispatch) => ({
-  fetchCollectionsAsync: () => dispatch(fetchCollectionsAsync()),
+  fetchCollectionStart: () => dispatch(fetchCollectionStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);
