@@ -15,8 +15,6 @@ const SignInAndSignUpPage = ({ currentUser, isFetching }) => {
   const [isWelcomeVisible, setWelcomeVisible] = useState(null);
   const [redirect, setRedirect] = useState(null);
 
-  console.log('isFetching flag', isFetching);
-
   useEffect(() => {
     if (currentUser === null) {
       setRedirect(false);

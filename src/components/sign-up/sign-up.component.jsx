@@ -37,7 +37,7 @@ class SingUp extends Component {
       });
       return;
     }
-    signUpStart({ displayName, email, password});
+    signUpStart({ displayName, email, password });
   }
 
   render() {
