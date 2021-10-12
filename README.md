@@ -1,3 +1,12 @@
+# Simple e-commerece web app built using react
+
+In this project, I have experimented with react hooks, redux, redux-thunk, redux-sagas, firebase, and other technologies.
+
+The aim is to build and have a very simple user-friendly experience in this e-commerce web app using the above technologies.
+
+## Note :
+For redux-thunk and redux-sagas implmentation, I have created separate branches and made sure its easy for developers to understand.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
