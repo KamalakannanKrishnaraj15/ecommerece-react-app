@@ -8,14 +8,15 @@ import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 
 class SingUp extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       displayName: '',
       email: '',
       password: '',
       confirmPassword: '',
+      showPasswordMismatch: false,
     };
   }
 
@@ -31,8 +32,13 @@ class SingUp extends Component {
 
     const { displayName, email, password, confirmPassword } = this.state;
     if (password !== confirmPassword) {
+      this.setState({
+        showPasswordMismatch: true,
+      });
       return;
     }
+
+    this.props.onSingUpSubmit(true);
 
     try {
       const { user } = await auth.createUserWithEmailAndPassword(
@@ -45,14 +51,23 @@ class SingUp extends Component {
         email: '',
         password: '',
         confirmPassword: '',
+      }, () => {
+        this.props.onSingUpSubmit(false);
       });
     } catch(error) {
+      this.props.onSingUpSubmit(false);
       console.log(error);
     }
   }
 
   render() {
-    const { displayName, email, password, confirmPassword } = this.state;
+    const {
+        displayName,
+        email,
+        password,
+        confirmPassword,
+        showPasswordMismatch
+      } = this.state;
     return (
       <div className='sign-up'>
         <h2 className='title'>Sign up</h2>
@@ -62,7 +77,7 @@ class SingUp extends Component {
             type='text'
             handleChange={this.handleChange}
             value={displayName}
-            label='displayName'
+            label='Display Name'
             required
           />
           <FormInput
@@ -70,7 +85,7 @@ class SingUp extends Component {
             type='email'
             handleChange={this.handleChange}
             value={email}
-            label='email'
+            label='Email'
             required
           />
           <FormInput
@@ -78,7 +93,7 @@ class SingUp extends Component {
             type='password'
             value={password}
             handleChange={this.handleChange}
-            label='password'
+            label='Password'
             required
           />
           <FormInput
@@ -86,11 +101,12 @@ class SingUp extends Component {
             type='password'
             value={confirmPassword}
             handleChange={this.handleChange}
-            label='confirm password'
+            label='Confirm password'
             required
           />
+          {showPasswordMismatch && (<div className='signup-input-error'>Password doesn't match</div>)}
         </form>
-        <CustomButton type='submit' onSubmit={this.handleSubmit}>Sign Up</CustomButton>
+        <CustomButton type='submit' onClick={this.handleSubmit}>Sign Up</CustomButton>
       </div>
     );
   }

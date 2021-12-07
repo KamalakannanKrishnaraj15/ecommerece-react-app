@@ -11,12 +11,27 @@
   align-items: center;
   display: flex;
   height: calc(100vh - 180px);
+  width: 100%;
+  text-align: center;
 }
 
 .welcome-lottie-anmiation {
   width: 300px;
   height: 300px;
   margin-bottom: 30px;
+}
+
+.continue-shopping-msg {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.continue-shopping-animation {
+  margin-top: 8px;
+  margin-left: -5px;
+  width: 24px;
+  height: 40px;
 }
 
 @media screen and (min-width: 768px) {

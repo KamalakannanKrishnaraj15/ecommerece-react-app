@@ -19,6 +19,17 @@
   }
 }
 
+.google-sign-in {
+  background-color: whitesmoke;
+  color: white;
+  padding: 8px 10px;
+
+  &:hover {
+    background-color: #357ae8;
+    border: none;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .sign-in {
     width: 440px;
