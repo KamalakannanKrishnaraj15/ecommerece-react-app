@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-import './form-input.styles.scss';
+import {
+  GroupContainer,
+  FormInputContainer,
+  FormInputLabel,
+  FormInputPasswordIconContainer
+} from './form-input.styles.jsx';
 import { ReactComponent as PasswordProtected } from '../../assets/password-protected.svg';
 import { ReactComponent as PasswordUnProtected } from '../../assets/password-unprotected.svg';
 
@@ -18,53 +23,50 @@ const FormInput = ({ handleChange, label, type, ...otherProps }) => {
 
   if (type !== 'password') {
     return (
-      <div className='group'>
-        <input
-          className='form-input'
+      <GroupContainer>
+        <FormInputContainer
           onChange={handleChange}
           type={type}
           {...otherProps}
         />
         {label ? (
-          <label
+          <FormInputLabel
             className={`${
               otherProps.value.length ? 'shrink' : ''
-            } form-input-label`}
+            }`}
           >
             {label}
-          </label>
+          </FormInputLabel>
         ) : null}
-      </div>
+      </GroupContainer>
     );
   }
 
   return (
-    <div className='group'>
-      <input
-        className='form-input'
+    <GroupContainer>
+      <FormInputContainer
         onChange={handleChange}
         type={isPasswordType ? type : 'text'}
         {...otherProps}
       />
-      <div
-        className='form-input-password-icon-container'
+      <FormInputPasswordIconContainer
         onClick={handlePasswordIconClick}>
         {
           isPasswordType
           ? (<PasswordProtected />)
           : (<PasswordUnProtected />)
         }
-      </div>
+      </FormInputPasswordIconContainer>
       {label ? (
-        <label
+        <FormInputLabel
           className={`${
             otherProps.value.length ? 'shrink' : ''
-          } form-input-label`}
+          }`}
         >
           {label}
-        </label>
+        </FormInputLabel>
       ) : null}
-    </div>
+    </GroupContainer>
   );
 }
 

@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import lottie from 'lottie-web';
 
-import CustomButton from '../custom-button/custom-button.component';
 import CartItem from '../cart-item/cart-item.component';
 
 import { selectCartItemsCount, selectCartItems } from '../../redux/cart/cart.selectors';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';
 
-import './cart-dropdown.styles.scss';
+import {
+  CartDropdownContainer,
+  CartDropdownButton,
+  EmptyCartAnimationWrapper,
+  CartItemsContainer
+} from './cart-dropdown.styles.jsx';
 
 const CartDropdown = ({
   cartItems,
@@ -43,23 +47,23 @@ const CartDropdown = ({
   }
   
   return (
-    <div className='cart-dropdown'>
-      <div className='cart-items'>
+    <CartDropdownContainer>
+      <CartItemsContainer>
         {
           cartItemsCount === 0
             ? (
-              <div id="empty-cart" className='empty-cart-animation' />
+              <EmptyCartAnimationWrapper id="empty-cart" />
             )
             : returnCartItemsMap()
         }
-      </div>
-      <CustomButton
+      </CartItemsContainer>
+      <CartDropdownButton
         onClick={handleCheckoutButton}
         customClassName='cart-checkout-button'
       >
         Checkout
-      </CustomButton>
-    </div>
+      </CartDropdownButton>
+    </CartDropdownContainer>
   );
 }
 
