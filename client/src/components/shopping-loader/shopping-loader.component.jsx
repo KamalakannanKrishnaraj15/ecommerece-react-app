@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import lottie from 'lottie-web';
+import styled from 'styled-components';
 
-import './shopping-loader.styles.scss';
+const ShoppingLoaderContainer = styled.div`
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 180px);
+  width: 100%;
+`;
+
+const ShoppingLoaderAnimationWrapper = styled.div`
+  width: 300px;
+  height: 300px;
+  margin-bottom: 30px;
+`;
 
 const ShoppingLoader = ({ state }) => {
   const [isShoppingLoaderVisible] = useState(state);
@@ -19,11 +32,11 @@ const ShoppingLoader = ({ state }) => {
   }, [isShoppingLoaderVisible]);
 
   return (
-    <div className='shopping-loader-container'>
+    <ShoppingLoaderContainer>
       <div>
-        <div id='shopping-loader-lottie' className='shopping-loader-animation' />
+        <ShoppingLoaderAnimationWrapper id='shopping-loader-lottie' />
       </div>
-    </div>
+    </ShoppingLoaderContainer>
   );
 };
 

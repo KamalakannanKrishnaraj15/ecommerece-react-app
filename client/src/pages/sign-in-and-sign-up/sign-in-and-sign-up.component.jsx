@@ -7,7 +7,13 @@ import SignIn from '../../components/sign-in/sign-in.component';
 import SignUp from '../../components/sign-up/sign-up.component';
 import ShoppingLoader from '../../components/shopping-loader/shopping-loader.component';
 
-import './sign-in-and-sign-up.styles.scss';
+import {
+  SignInAndSingUp,
+  WelcomeMsgContainer,
+  WelcomeLottieAnimationWrapper,
+  ContinueShoppingMsg,
+  ContinueShoppingAnimationWrapper
+} from './sign-in-and-sign-up.styles.jsx';
 
 const SignInAndSignUpPage = ({ currentUser }) => {
   const [isWelcomeVisible, setWelcomeVisible] = useState(null);
@@ -67,18 +73,18 @@ const SignInAndSignUpPage = ({ currentUser }) => {
       }
       case isWelcomeVisible: {
         return (
-          <div className='welcome-msg-container'>
-            <div>
+          <WelcomeMsgContainer>
+            <>
               <div>
-                <div id='welcome-lottie' className='welcome-lottie-anmiation' />
+                <WelcomeLottieAnimationWrapper id='welcome-lottie' />
               </div>
               <h2 className='welcome-msg'>Welcome to crown shopping!</h2>
-              <div className='continue-shopping-msg'>
+              <ContinueShoppingMsg>
                 Continue shopping
-                <div id='continue-shopping' className='continue-shopping-animation' />
-              </div>
-            </div>
-          </div>
+                <ContinueShoppingAnimationWrapper id='continue-shopping' />
+              </ContinueShoppingMsg>
+            </>
+          </WelcomeMsgContainer>
         );
       }
       case isShoppingLoaderVisible: {
@@ -98,9 +104,9 @@ const SignInAndSignUpPage = ({ currentUser }) => {
   };
 
   return (
-    <div className='sign-in-and-sign-up'>
+    <SignInAndSingUp>
       {getComponent()}
-    </div>
+    </SignInAndSingUp>
   );
 };
 

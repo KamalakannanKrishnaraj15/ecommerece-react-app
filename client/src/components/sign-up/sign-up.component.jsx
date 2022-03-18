@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import './sign-up.styles.scss';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
+const SignUpContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  text-align: center;
 
+  @media screen and (min-width: 768px) {
+    width: 440px;
+  }
+`;
+
+const SignUpTitle = styled.h2`
+  margin: 10px 0;
+`;
+
+const SignUpInputError = styled.div`
+  color: red;
+  margin: 0 0 30px;
+  text-align: left;
+`;
 class SingUp extends Component {
   constructor(props) {
     super(props);
@@ -69,8 +89,8 @@ class SingUp extends Component {
         showPasswordMismatch
       } = this.state;
     return (
-      <div className='sign-up'>
-        <h2 className='title'>Sign up</h2>
+      <SignUpContainer>
+        <SignUpTitle>Sign up</SignUpTitle>
         <form onSubmit={this.handleSubmit}>
           <FormInput
             name='displayName'
@@ -104,10 +124,10 @@ class SingUp extends Component {
             label='Confirm password'
             required
           />
-          {showPasswordMismatch && (<div className='signup-input-error'>Password doesn't match</div>)}
+          {showPasswordMismatch && (<SignUpInputError>Password doesn't match</SignUpInputError>)}
         </form>
         <CustomButton type='submit' onClick={this.handleSubmit}>Sign Up</CustomButton>
-      </div>
+      </SignUpContainer>
     );
   }
 }
